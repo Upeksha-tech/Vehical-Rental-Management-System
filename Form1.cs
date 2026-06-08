@@ -1,8 +1,8 @@
 namespace Vehical_Rental_Management_System
 {
-    public partial class booking : Form
+    public partial class bookingForm : Form
     {
-        public booking()
+        public bookingForm()
         {
             InitializeComponent();
         }
