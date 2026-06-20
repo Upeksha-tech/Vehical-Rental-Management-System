@@ -63,24 +63,14 @@
             label11 = new Label();
             label12 = new Label();
             label13 = new Label();
-            groupBox3 = new GroupBox();
+            btnPay = new Button();
             btnClear = new Button();
-            btnPrint = new Button();
-            btnConfirm = new Button();
-            dateTimePayament = new DateTimePicker();
-            cmbMethod = new ComboBox();
-            txtNotes = new TextBox();
-            txtPaid = new TextBox();
-            label6 = new Label();
-            label14 = new Label();
-            label15 = new Label();
-            label16 = new Label();
+            btnReturn = new Button();
             menuStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             lblTotal.SuspendLayout();
             groupBox2.SuspendLayout();
-            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -89,7 +79,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { returnToolStripMenuItem, refreshToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1342, 28);
+            menuStrip1.Size = new Size(1282, 28);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -116,7 +106,7 @@
             groupBox1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             groupBox1.Location = new Point(26, 48);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1304, 177);
+            groupBox1.Size = new Size(1240, 177);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Select Active Rental";
@@ -131,7 +121,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(1285, 94);
+            dataGridView1.Size = new Size(1208, 94);
             dataGridView1.TabIndex = 7;
             // 
             // bthShowAll
@@ -198,9 +188,9 @@
             lblTotal.Controls.Add(label8);
             lblTotal.Controls.Add(label7);
             lblTotal.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotal.Location = new Point(26, 250);
+            lblTotal.Location = new Point(26, 240);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(638, 562);
+            lblTotal.Size = new Size(638, 384);
             lblTotal.TabIndex = 3;
             lblTotal.TabStop = false;
             lblTotal.Text = "Return Details";
@@ -350,9 +340,9 @@
             groupBox2.Controls.Add(label12);
             groupBox2.Controls.Add(label13);
             groupBox2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            groupBox2.Location = new Point(670, 250);
+            groupBox2.Location = new Point(670, 240);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(660, 261);
+            groupBox2.Size = new Size(577, 261);
             groupBox2.TabIndex = 19;
             groupBox2.TabStop = false;
             groupBox2.Text = "Change Calculations";
@@ -451,141 +441,50 @@
             label13.TabIndex = 1;
             label13.Text = "Daily Rate (LKR) :";
             // 
-            // groupBox3
+            // btnPay
             // 
-            groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            groupBox3.BackColor = SystemColors.Control;
-            groupBox3.Controls.Add(btnClear);
-            groupBox3.Controls.Add(btnPrint);
-            groupBox3.Controls.Add(btnConfirm);
-            groupBox3.Controls.Add(dateTimePayament);
-            groupBox3.Controls.Add(cmbMethod);
-            groupBox3.Controls.Add(txtNotes);
-            groupBox3.Controls.Add(txtPaid);
-            groupBox3.Controls.Add(label6);
-            groupBox3.Controls.Add(label14);
-            groupBox3.Controls.Add(label15);
-            groupBox3.Controls.Add(label16);
-            groupBox3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            groupBox3.Location = new Point(670, 530);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(660, 282);
-            groupBox3.TabIndex = 20;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Payment";
+            btnPay.BackColor = Color.Green;
+            btnPay.Cursor = Cursors.Hand;
+            btnPay.FlatStyle = FlatStyle.Flat;
+            btnPay.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPay.Location = new Point(670, 519);
+            btnPay.Name = "btnPay";
+            btnPay.Size = new Size(371, 38);
+            btnPay.TabIndex = 20;
+            btnPay.Text = "Proceed to Payment";
+            btnPay.UseVisualStyleBackColor = false;
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(339, 243);
+            btnClear.Cursor = Cursors.Hand;
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClear.Location = new Point(1047, 519);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(300, 29);
-            btnClear.TabIndex = 23;
+            btnClear.Size = new Size(200, 38);
+            btnClear.TabIndex = 21;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
             // 
-            // btnPrint
+            // btnReturn
             // 
-            btnPrint.Location = new Point(27, 243);
-            btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(300, 29);
-            btnPrint.TabIndex = 22;
-            btnPrint.Text = "Print";
-            btnPrint.UseVisualStyleBackColor = true;
-            // 
-            // btnConfirm
-            // 
-            btnConfirm.BackColor = Color.DodgerBlue;
-            btnConfirm.Cursor = Cursors.Hand;
-            btnConfirm.FlatStyle = FlatStyle.Flat;
-            btnConfirm.ForeColor = SystemColors.ButtonFace;
-            btnConfirm.Location = new Point(27, 204);
-            btnConfirm.Name = "btnConfirm";
-            btnConfirm.Size = new Size(612, 33);
-            btnConfirm.TabIndex = 21;
-            btnConfirm.Text = "Confirm Return && Pay";
-            btnConfirm.UseVisualStyleBackColor = false;
-            // 
-            // dateTimePayament
-            // 
-            dateTimePayament.CustomFormat = "";
-            dateTimePayament.Format = DateTimePickerFormat.Short;
-            dateTimePayament.Location = new Point(194, 117);
-            dateTimePayament.Name = "dateTimePayament";
-            dateTimePayament.Size = new Size(174, 27);
-            dateTimePayament.TabIndex = 19;
-            // 
-            // cmbMethod
-            // 
-            cmbMethod.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbMethod.FormattingEnabled = true;
-            cmbMethod.Location = new Point(194, 81);
-            cmbMethod.Name = "cmbMethod";
-            cmbMethod.Size = new Size(172, 28);
-            cmbMethod.TabIndex = 20;
-            // 
-            // txtNotes
-            // 
-            txtNotes.BackColor = SystemColors.ControlLightLight;
-            txtNotes.Location = new Point(194, 153);
-            txtNotes.Multiline = true;
-            txtNotes.Name = "txtNotes";
-            txtNotes.Size = new Size(233, 37);
-            txtNotes.TabIndex = 18;
-            // 
-            // txtPaid
-            // 
-            txtPaid.BackColor = SystemColors.ControlLightLight;
-            txtPaid.Location = new Point(194, 47);
-            txtPaid.Name = "txtPaid";
-            txtPaid.Size = new Size(172, 27);
-            txtPaid.TabIndex = 12;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(124, 154);
-            label6.Name = "label6";
-            label6.Size = new Size(64, 23);
-            label6.TabIndex = 6;
-            label6.Text = "Notes :";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label14.Location = new Point(62, 117);
-            label14.Name = "label14";
-            label14.Size = new Size(126, 23);
-            label14.TabIndex = 3;
-            label14.Text = "Payment Date :";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label15.Location = new Point(38, 81);
-            label15.Name = "label15";
-            label15.Size = new Size(150, 23);
-            label15.TabIndex = 2;
-            label15.Text = "Payment Method :";
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label16.Location = new Point(27, 46);
-            label16.Name = "label16";
-            label16.Size = new Size(161, 23);
-            label16.TabIndex = 1;
-            label16.Text = "Amount Paid (LKR) :";
+            btnReturn.BackColor = SystemColors.MenuHighlight;
+            btnReturn.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnReturn.Location = new Point(670, 563);
+            btnReturn.Name = "btnReturn";
+            btnReturn.Size = new Size(577, 41);
+            btnReturn.TabIndex = 22;
+            btnReturn.Text = "Confirm Return";
+            btnReturn.UseVisualStyleBackColor = false;
             // 
             // returnForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1342, 824);
-            Controls.Add(groupBox3);
+            ClientSize = new Size(1282, 660);
+            Controls.Add(btnReturn);
+            Controls.Add(btnClear);
+            Controls.Add(btnPay);
             Controls.Add(groupBox2);
             Controls.Add(lblTotal);
             Controls.Add(groupBox1);
@@ -602,8 +501,6 @@
             lblTotal.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -645,17 +542,8 @@
         private Label label12;
         private Label label13;
         private TextBox txtTotalFee;
-        private GroupBox groupBox3;
-        private TextBox txtNotes;
-        private TextBox txtPaid;
-        private Label label6;
-        private Label label14;
-        private Label label15;
-        private Label label16;
-        private DateTimePicker dateTimePayament;
-        private ComboBox cmbMethod;
-        private Button btnConfirm;
+        private Button btnPay;
         private Button btnClear;
-        private Button btnPrint;
+        private Button btnReturn;
     }
 }
