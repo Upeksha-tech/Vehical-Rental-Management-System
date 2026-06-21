@@ -26,10 +26,8 @@ namespace Vehical_Rental_Management_System
         // { username, password, role }  — case-sensitive passwords
         private static readonly string[,] MockUsers =
         {
-            { "admin",   "Admin@123",  "Admin"   },
             { "manager", "Mgr@2024",   "Manager" },
-            { "staff",   "Staff@001",  "Staff"   },
-            { "viewer",  "View@999",   "Viewer"  }
+            { "staff",   "Staff@001",  "Staff"   }
         };
 
         // ── State ────────────────────────────────────────────────────────────
@@ -59,7 +57,7 @@ namespace Vehical_Rental_Management_System
             // Enter key from any input fires the login
             txtUsername.KeyDown += InputField_KeyDown;
             txtPassword.KeyDown += InputField_KeyDown;
-            cmbRole.KeyDown     += InputField_KeyDown;
+            cmbRole.KeyDown += InputField_KeyDown;
 
             AttachButtonHoverEffects();
         }
@@ -69,10 +67,10 @@ namespace Vehical_Rental_Management_System
         // ────────────────────────────────────────────────────────────────────
         private void pnlCard_Paint(object sender, PaintEventArgs e)
         {
-            var g     = e.Graphics;
+            var g = e.Graphics;
             var panel = (Panel)sender;
-            var rect  = new Rectangle(4, 4, panel.Width - 8, panel.Height - 8);
-            int r     = 16;
+            var rect = new Rectangle(4, 4, panel.Width - 8, panel.Height - 8);
+            int r = 16;
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -86,11 +84,11 @@ namespace Vehical_Rental_Management_System
             }
 
             // White card
-            using var cardBrush  = new SolidBrush(Color.White);
-            using var cardPath   = RoundedRectPath(rect, r);
+            using var cardBrush = new SolidBrush(Color.White);
+            using var cardPath = RoundedRectPath(rect, r);
             g.FillPath(cardBrush, cardPath);
 
-            using var borderPen  = new Pen(Color.FromArgb(210, 210, 215), 1f);
+            using var borderPen = new Pen(Color.FromArgb(210, 210, 215), 1f);
             g.DrawPath(borderPen, cardPath);
         }
 
@@ -101,7 +99,7 @@ namespace Vehical_Rental_Management_System
         {
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text;
-            string role     = cmbRole.SelectedItem?.ToString() ?? string.Empty;
+            string role = cmbRole.SelectedItem?.ToString() ?? string.Empty;
 
             // ── Validation ────────────────────────────────────────────────────
             if (string.IsNullOrWhiteSpace(username))
@@ -126,7 +124,7 @@ namespace Vehical_Rental_Management_System
                 : AuthenticateMySQL(username, password, role);
 
             if (ok) OnLoginSuccess(username, role);
-            else    OnLoginFailure();
+            else OnLoginFailure();
         }
 
         // ────────────────────────────────────────────────────────────────────
@@ -184,7 +182,7 @@ namespace Vehical_Rental_Management_System
                     2003 => "Cannot connect to MySQL. Make sure XAMPP is running and MySQL service is started.",
                     1049 => "Database 'VehicleRentalDB' not found. Create it in phpMyAdmin first.",
                     1146 => "Table 'users' does not exist. Run the CREATE TABLE script.",
-                    _    => ex.Message
+                    _ => ex.Message
                 };
 
                 DialogResult choice = MessageBox.Show(
@@ -236,7 +234,7 @@ namespace Vehical_Rental_Management_System
 
         private void OnLoginFailure()
         {
-            lblAttemptsWarn.Text  = "⚠ Invalid username, password, or role. Please try again.";
+            lblAttemptsWarn.Text = "⚠ Invalid username, password, or role. Please try again.";
             txtPassword.Clear();
             txtPassword.Focus();
 
@@ -252,6 +250,7 @@ namespace Vehical_Rental_Management_System
         // ────────────────────────────────────────────────────────────────────
         private void OpenDashboard(string username, string role)
         {
+            UserSession.Set(username, role);
             LoggedInUser = username;
             LoggedInRole = role;
             DialogResult = DialogResult.OK;
@@ -269,7 +268,7 @@ namespace Vehical_Rental_Management_System
             if (cmbRole.Items.Count > 0)
                 cmbRole.SelectedIndex = 0;
 
-            lblAttemptsWarn.Text  = string.Empty;
+            lblAttemptsWarn.Text = string.Empty;
             txtPassword.BackColor = SystemColors.Window;
             txtUsername.BackColor = SystemColors.Window;
 
@@ -300,26 +299,31 @@ namespace Vehical_Rental_Management_System
         private void AttachButtonHoverEffects()
         {
             Color loginNormal = btnLogin.BackColor;
-            Color loginHover  = Color.FromArgb(20, 90, 170);
+            Color loginHover = Color.FromArgb(20, 90, 170);
             btnLogin.MouseEnter += (s, e) => btnLogin.BackColor = loginHover;
             btnLogin.MouseLeave += (s, e) => btnLogin.BackColor = loginNormal;
 
             Color clearNormal = btnClear.BackColor;
-            Color clearHover  = Color.FromArgb(220, 223, 230);
+            Color clearHover = Color.FromArgb(220, 223, 230);
             btnClear.MouseEnter += (s, e) => btnClear.BackColor = clearHover;
             btnClear.MouseLeave += (s, e) => btnClear.BackColor = clearNormal;
         }
 
         private static GraphicsPath RoundedRectPath(Rectangle rect, int radius)
         {
-            int d    = radius * 2;
+            int d = radius * 2;
             var path = new GraphicsPath();
-            path.AddArc(rect.X,         rect.Y,          d, d, 180, 90);
-            path.AddArc(rect.Right - d, rect.Y,          d, d, 270, 90);
-            path.AddArc(rect.Right - d, rect.Bottom - d, d, d,   0, 90);
-            path.AddArc(rect.X,         rect.Bottom - d, d, d,  90, 90);
+            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
             path.CloseFigure();
             return path;
+        }
+
+        private void cmbRole_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
