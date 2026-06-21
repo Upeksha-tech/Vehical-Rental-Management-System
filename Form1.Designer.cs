@@ -1,6 +1,6 @@
 ﻿namespace Vehical_Rental_Management_System
 {
-    partial class booking
+    partial class bookingForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(booking));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(bookingForm));
             menuStrip1 = new MenuStrip();
             backToolStripMenuItem = new ToolStripMenuItem();
             refreshToolStripMenuItem = new ToolStripMenuItem();
@@ -254,6 +254,7 @@
             // 
             btnSearch.BackgroundImage = (Image)resources.GetObject("btnSearch.BackgroundImage");
             btnSearch.BackgroundImageLayout = ImageLayout.Zoom;
+            btnSearch.Cursor = Cursors.Hand;
             btnSearch.Font = new Font("Segoe UI Emoji", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSearch.Location = new Point(411, 42);
             btnSearch.Name = "btnSearch";
@@ -316,7 +317,7 @@
             // 
             // txtDailyRate
             // 
-            txtDailyRate.BackColor = SystemColors.Control;
+            txtDailyRate.BackColor = SystemColors.ControlLightLight;
             txtDailyRate.Location = new Point(197, 169);
             txtDailyRate.Name = "txtDailyRate";
             txtDailyRate.Size = new Size(134, 27);
@@ -324,7 +325,7 @@
             // 
             // txtNo_Days
             // 
-            txtNo_Days.BackColor = SystemColors.Control;
+            txtNo_Days.BackColor = SystemColors.ControlLightLight;
             txtNo_Days.Location = new Point(197, 130);
             txtNo_Days.Name = "txtNo_Days";
             txtNo_Days.ReadOnly = true;
@@ -569,6 +570,7 @@
             // btnClear
             // 
             btnClear.BackColor = SystemColors.Control;
+            btnClear.Cursor = Cursors.Hand;
             btnClear.FlatAppearance.BorderColor = Color.DodgerBlue;
             btnClear.FlatAppearance.BorderSize = 0;
             btnClear.FlatStyle = FlatStyle.Popup;
@@ -583,9 +585,11 @@
             // 
             btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnSave.BackColor = Color.DodgerBlue;
+            btnSave.Cursor = Cursors.Hand;
             btnSave.FlatAppearance.BorderColor = Color.DodgerBlue;
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Popup;
+            btnSave.ForeColor = SystemColors.ButtonFace;
             btnSave.Location = new Point(23, 29);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(297, 29);
@@ -626,7 +630,7 @@
             panel3.Size = new Size(1354, 3);
             panel3.TabIndex = 7;
             // 
-            // booking
+            // bookingForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -641,7 +645,7 @@
             Controls.Add(groupBox1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            Name = "booking";
+            Name = "bookingForm";
             Text = "Rental Booking";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
