@@ -643,6 +643,7 @@
             MainMenuStrip = menuStrip1;
             Name = "booking";
             Text = "Rental Booking";
+            Load += booking_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             groupBox1.ResumeLayout(false);

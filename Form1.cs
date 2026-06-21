@@ -11,5 +11,10 @@ namespace Vehical_Rental_Management_System
         {
 
         }
+
+        private void booking_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
