@@ -9,25 +9,21 @@ using System.Windows.Forms;
 
 namespace Vehical_Rental_Management_System
 {
-    // =====================================================================
-    // PRESENTATION TIER: frmCustomer
-    // =====================================================================
+
     public partial class frmCustomer : Form
     {
-        // ── Connection String ────────────────────────────────────────────
+
         private readonly string _connStr = DatabaseConnection.ConnectionString;
 
-        // ── State ────────────────────────────────────────────────────────
+
         private bool _isDbAvailable = false;
-        private int  _selectedCustomerID = -1;   // -1 = new record mode
+        private int  _selectedCustomerID = -1;
         private Label _lblDbStatus = null!;
 
-        // ── Offline / Demo fallback data ─────────────────────────────────
+
         private readonly List<Customer> _offlineList = new();
 
-        // ================================================================
-        // CONSTRUCTOR
-        // ================================================================
+
         public frmCustomer()
         {
             InitializeComponent();
@@ -35,9 +31,7 @@ namespace Vehical_Rental_Management_System
             SeedOfflineData();
         }
 
-        // ================================================================
-        // EVENT WIRING  (controls defined in Designer; logic here)
-        // ================================================================
+
         private void WireEvents()
         {
             btnEdit.Click   += btnEdit_Click;
@@ -52,7 +46,7 @@ namespace Vehical_Rental_Management_System
             txtSearch.KeyDown             += (s, e) =>
                 { if (e.KeyCode == Keys.Enter) LoadGrid(txtSearch.Text.Trim()); };
 
-            // Floating connection-status label
+
             _lblDbStatus = new Label
             {
                 AutoSize = true,
@@ -65,9 +59,7 @@ namespace Vehical_Rental_Management_System
             _lblDbStatus.BringToFront();
         }
 
-        // ================================================================
-        // FORM LOAD
-        // ================================================================
+
         private void frmCustomer_Load(object sender, EventArgs e)
         {
             StyleGrid();
@@ -76,20 +68,18 @@ namespace Vehical_Rental_Management_System
             SetFormReadOnly(true);
         }
 
-        // ================================================================
-        // DATA TIER – Database initialisation
-        // ================================================================
+
         private void TryConnectDb()
         {
             try
             {
-                // 1. Ensure database exists
+
                 using var rootConn = new MySqlConnection("server=localhost;uid=root;pwd=;");
                 rootConn.Open();
                 new MySqlCommand("CREATE DATABASE IF NOT EXISTS VehicleRentalDB;", rootConn)
                     .ExecuteNonQuery();
 
-                // 2. Ensure customers table exists (schema matches proposal)
+
                 using var conn = new MySqlConnection(_connStr);
                 conn.Open();
                 new MySqlCommand(@"
@@ -116,9 +106,7 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // ================================================================
-        // DATA TIER – Load / filter grid
-        // ================================================================
+
         private void LoadGrid(string filter = "")
         {
             dgvCustomer.SelectionChanged -= DgvCustomer_SelectionChanged;
@@ -193,16 +181,14 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // ================================================================
-        // BUSINESS LOGIC – btnAdd: clear for new entry, auto-generate ID
-        // ================================================================
+
         private void btnAdd_Click(object? sender, EventArgs e)
         {
             _selectedCustomerID = -1;
             ClearForm();
             txtRegistered.Text = DateTime.Today.ToString("yyyy-MM-dd");
 
-            // Auto-generate next CustomerID preview (read-only hint)
+
             int nextId = GetNextCustomerID();
             lblfillActive.Text = $"New — ID will be: {nextId}";
             lblfillActive.ForeColor = Color.Gray;
@@ -211,9 +197,7 @@ namespace Vehical_Rental_Management_System
             txtFullName.Focus();
         }
 
-        // ================================================================
-        // BUSINESS LOGIC – btnEdit: enable editing of selected row
-        // ================================================================
+
         private void btnEdit_Click(object? sender, EventArgs e)
         {
             if (_selectedCustomerID < 0)
@@ -225,12 +209,10 @@ namespace Vehical_Rental_Management_System
             txtFullName.Focus();
         }
 
-        // ================================================================
-        // BUSINESS LOGIC – btnSave: INSERT (new) or UPDATE (existing)
-        // ================================================================
+
         private void btnSave_Click(object? sender, EventArgs e)
         {
-            // ── Validation ────────────────────────────────────────────────
+
             if (!ValidateInputs()) return;
 
             DateTime regDate;
@@ -245,7 +227,7 @@ namespace Vehical_Rental_Management_System
 
         private void InsertCustomer(DateTime regDate)
         {
-            // Duplicate NIC check
+
             if (NicExists(txtNIC.Text.Trim()))
             {
                 ShowWarning("A customer with this NIC already exists. Please verify the NIC number.");
@@ -345,9 +327,7 @@ namespace Vehical_Rental_Management_System
             LoadGrid();
         }
 
-        // ================================================================
-        // BUSINESS LOGIC – btnDelete: block if active rental exists
-        // ================================================================
+
         private void btnDelete_Click(object? sender, EventArgs e)
         {
             if (_selectedCustomerID < 0)
@@ -356,7 +336,7 @@ namespace Vehical_Rental_Management_System
                 return;
             }
 
-            // Block deletion if customer has active rentals
+
             int activeCount = GetActiveRentalCount(_selectedCustomerID);
             if (activeCount > 0)
             {
@@ -395,17 +375,13 @@ namespace Vehical_Rental_Management_System
             LoadGrid();
         }
 
-        // ================================================================
-        // BUSINESS LOGIC – btnSearch: filter grid by FullName or NIC
-        // ================================================================
+
         private void btnSearch_Click(object? sender, EventArgs e)
         {
             LoadGrid(txtSearch.Text.Trim());
         }
 
-        // ================================================================
-        // PRESENTATION – DataGridView row click → populate form fields
-        // ================================================================
+
         private void dgvCustomer_CellContentClick(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -434,9 +410,7 @@ namespace Vehical_Rental_Management_System
             lblfillActive.ForeColor = active > 0 ? Color.Red : Color.FromArgb(33, 37, 41);
         }
 
-        // ================================================================
-        // EXPORT – Menu > Export → CSV file
-        // ================================================================
+
         private void ExportToCsv(object? sender, EventArgs e)
         {
             using var sfd = new SaveFileDialog
@@ -464,9 +438,7 @@ namespace Vehical_Rental_Management_System
             catch (Exception ex) { ShowError("Export failed: " + ex.Message); }
         }
 
-        // ================================================================
-        // HELPER – Validation
-        // ================================================================
+
         private bool ValidateInputs()
         {
             if (string.IsNullOrWhiteSpace(txtFullName.Text))
@@ -500,9 +472,7 @@ namespace Vehical_Rental_Management_System
             return s.Length > 0;
         }
 
-        // ================================================================
-        // HELPER – DB queries
-        // ================================================================
+
         private bool NicExists(string nic)
         {
             if (_isDbAvailable)
@@ -519,7 +489,7 @@ namespace Vehical_Rental_Management_System
                 }
                 catch { return false; }
             }
-            // Offline check
+
             return _offlineList.Exists(c =>
                 c.NIC == nic && c.CustomerID != _selectedCustomerID);
         }
@@ -532,7 +502,7 @@ namespace Vehical_Rental_Management_System
                 {
                     using var conn = new MySqlConnection(_connStr);
                     conn.Open();
-                    // Try rentals table first; fall back to customers.ActiveRentals column
+
                     using var cmd = new MySqlCommand(
                         "SELECT ActiveRentals FROM customers WHERE CustomerID = @id;", conn);
                     cmd.Parameters.AddWithValue("@id", customerId);
@@ -561,9 +531,7 @@ namespace Vehical_Rental_Management_System
             return _offlineList.Count + 1;
         }
 
-        // ================================================================
-        // HELPER – Grid styling
-        // ================================================================
+
         private void StyleGrid()
         {
             dgvCustomer.BorderStyle = BorderStyle.None;
@@ -604,9 +572,7 @@ namespace Vehical_Rental_Management_System
             Rename("ActiveRentals",  "Active Rentals");
         }
 
-        // ================================================================
-        // HELPER – form read-only toggling
-        // ================================================================
+
         private void SetFormReadOnly(bool readOnly)
         {
             txtFullName.ReadOnly   = readOnly;
@@ -627,9 +593,7 @@ namespace Vehical_Rental_Management_System
             btnSave.Enabled = !readOnly;
         }
 
-        // ================================================================
-        // HELPER – Clear form fields
-        // ================================================================
+
         private void ClearForm()
         {
             txtFullName.Clear();
@@ -642,9 +606,7 @@ namespace Vehical_Rental_Management_System
             lblfillActive.ForeColor = Color.FromArgb(33, 37, 41);
         }
 
-        // ================================================================
-        // HELPER – DataTable schema
-        // ================================================================
+
         private static DataTable BuildEmptyTable()
         {
             var dt = new DataTable();
@@ -659,9 +621,7 @@ namespace Vehical_Rental_Management_System
             return dt;
         }
 
-        // ================================================================
-        // HELPER – Message boxes
-        // ================================================================
+
         private static void ShowSuccess(string msg) =>
             MessageBox.Show(msg, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         private static void ShowWarning(string msg) =>
@@ -671,9 +631,7 @@ namespace Vehical_Rental_Management_System
         private static void ShowInfo(string msg) =>
             MessageBox.Show(msg, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        // ================================================================
-        // HELPER – Offline seed data (demo / no-MySQL fallback)
-        // ================================================================
+
         private void SeedOfflineData()
         {
             _offlineList.AddRange(new[]

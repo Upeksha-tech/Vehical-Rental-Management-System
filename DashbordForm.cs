@@ -5,17 +5,12 @@ using MySql.Data.MySqlClient;
 
 namespace Vehical_Rental_Management_System
 {
-    /// <summary>
-    /// Main Dashboard form. Opened after a successful login.
-    /// Receives the logged-in user's name and role from LoginForm.
-    /// </summary>
+
     public partial class Form2 : Form
     {
-        // ── Logged-in user info ───────────────────────────────────────────────
         private readonly string _loggedInUser;
         private readonly string _loggedInRole;
 
-        // ── Constructor (called by LoginForm) ─────────────────────────────────
         public Form2(string username, string role)
         {
             InitializeComponent();
@@ -24,39 +19,32 @@ namespace Vehical_Rental_Management_System
             _loggedInRole = role;
         }
 
-        // ── Default constructor (keeps Designer happy) ────────────────────────
         public Form2() : this("Guest", "Staff") { }
 
-        // ── Form Load ─────────────────────────────────────────────────────────
         private void Form2_Load(object sender, EventArgs e)
         {
-            // Show the logged-in user and role in the title bar only (label1 stays as designed)
             Text = $"Vehicle Rental Management System  –  {_loggedInUser} ({_loggedInRole})";
 
-            // ── Wire Logout button ────────────────────────────────────────────
             button9.Click += BtnLogout_Click;
 
-            // ── Wire Navigation sidebar buttons ──────────────────────────────
-            button1.Click += (s, ev) => { /* Dashboard – already here, do nothing */ };
-            button2.Click += BtnVehicles_Click;       // 🚗 Vehicles
-            button3.Click += BtnCustomers_Click;      // 👤 Customers
-            button4.Click += BtnRentalBooking_Click;  // 📋 Rental Booking
-            button5.Click += BtnReturnVehicle_Click;  // 🔄 Return Vehicle
-            button6.Click += BtnPayments_Click;       // 💳 Payments
-            button7.Click += BtnReports_Click;        // 📊 Reports
+            button1.Click += (s, ev) => { };
+            button2.Click += BtnVehicles_Click;
+            button3.Click += BtnCustomers_Click;
+            button4.Click += BtnRentalBooking_Click;
+            button5.Click += BtnReturnVehicle_Click;
+            button6.Click += BtnPayments_Click;
+            button7.Click += BtnReports_Click;
 
-            // ── Wire menu strip (logic only – no designer changes) ────────────
             reportsToolStripMenuItem.Click += BtnReports_Click;
             adminToolStripMenuItem.Visible = false;
             modulesToolStripMenuItem.Click += BtnShowModulesMenu;
 
-            // Apply role-based visibility (hide buttons the role can't access)
+
             ApplyRolePermissions();
 
             LoadDashboardData();
         }
 
-        // ── Helper: open a child form modally, then return to dashboard ───────
         private void OpenChildForm(Form childForm, AppModule module)
         {
             if (!AccessControl.CanOpen(module))
@@ -88,7 +76,6 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // ── Navigation handlers ───────────────────────────────────────────────
         private void BtnVehicles_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Form3(), AppModule.Vehicles);
@@ -139,7 +126,6 @@ namespace Vehical_Rental_Management_System
             menu.Items.Add(text, null, handler);
         }
 
-        // ── Load live stats from MySQL (updates existing labels/grid only) ───
         private void LoadDashboardData()
         {
             try
@@ -171,7 +157,6 @@ namespace Vehical_Rental_Management_System
             }
             catch
             {
-                // Keep designer default values when DB is unavailable
             }
         }
 
@@ -181,7 +166,6 @@ namespace Vehical_Rental_Management_System
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
-        // ── Logout ────────────────────────────────────────────────────────────
         private void BtnLogout_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show(
@@ -193,16 +177,11 @@ namespace Vehical_Rental_Management_System
             if (result == DialogResult.Yes)
             {
                 UserSession.Clear();
-                DialogResult = DialogResult.Retry; // Signals Program.cs to show LoginForm again
+                DialogResult = DialogResult.Retry;
                 Close();
             }
         }
 
-        // ── Role-based UI permissions ─────────────────────────────────────────
-        /// <summary>
-        /// Hides/disables menu items and buttons the current role cannot access.
-        /// Extend this method as you add more role-restricted features.
-        /// </summary>
         private void ApplyRolePermissions()
         {
             button2.Visible = AccessControl.CanOpen(AppModule.Vehicles);
@@ -211,10 +190,10 @@ namespace Vehical_Rental_Management_System
             button5.Visible = AccessControl.CanOpen(AppModule.Return);
             button6.Visible = AccessControl.CanOpen(AppModule.Payments);
             button7.Visible = AccessControl.CanOpen(AppModule.Reports);
-            button8.Visible = false; // Hide Users button - Admin role removed
+            button8.Visible = false;
 
             reportsToolStripMenuItem.Visible = AccessControl.CanOpen(AppModule.Reports);
-            adminToolStripMenuItem.Visible = false; // Hide Admin menu item
+            adminToolStripMenuItem.Visible = false;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

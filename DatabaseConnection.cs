@@ -1,9 +1,6 @@
 namespace Vehical_Rental_Management_System
 {
-    /// <summary>
-    /// Shared XAMPP MySQL connection settings for the whole application.
-    /// Server: localhost:3306 | Database: VehicleRentalDB | User: root (default XAMPP)
-    /// </summary>
+
     internal static class DatabaseConnection
     {
         public const string ConnectionString =

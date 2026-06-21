@@ -2,10 +2,7 @@ namespace Vehical_Rental_Management_System
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        ///  Flow: LoginForm → Dashboard (Form2) → module forms → logout → LoginForm
-        /// </summary>
+
         [STAThread]
         static void Main()
         {

@@ -8,15 +8,13 @@ using System.Windows.Forms;
 
 namespace Vehical_Rental_Management_System
 {
-    // =====================================================================
-    // PRESENTATION TIER: frmPayment
-    // =====================================================================
+
     public partial class frmPayment : Form
     {
-        // ── Connection String ────────────────────────────────────────────
+
         private readonly string _connStr = DatabaseConnection.ConnectionString;
 
-        // ── State ────────────────────────────────────────────────────────
+
         private bool _isDbAvailable  = false;
         private int  _loadedRentalID = -1;
         private bool _fromReturnFlow = false;
@@ -26,9 +24,7 @@ namespace Vehical_Rental_Management_System
 
         private string _receiptText = string.Empty;
 
-        /// <summary>
-        /// Pre-fills payment fields from the Return form (final calculated charges).
-        /// </summary>
+
         public void LoadFromReturn(PaymentRequest request)
         {
             _fromReturnFlow    = true;
@@ -69,18 +65,14 @@ namespace Vehical_Rental_Management_System
             txtTotalDue.ReadOnly     = true;
         }
 
-        // ================================================================
-        // CONSTRUCTOR
-        // ================================================================
+
         public frmPayment()
         {
             InitializeComponent();
             WireEvents();
         }
 
-        // ================================================================
-        // EVENT WIRING
-        // ================================================================
+
         private void WireEvents()
         {
             btnNewPayment.Click    += BtnNewPayment_Click;
@@ -101,12 +93,12 @@ namespace Vehical_Rental_Management_System
                 { if (e.KeyCode == Keys.Enter) BtnGo_Click(s, e); };
             dtpDate.ValueChanged += dateTimePicker1_ValueChanged;
 
-            // Payment methods
+
             comboBox1.Items.AddRange(new object[]
                 { "Cash", "Credit Card", "Debit Card", "Bank Transfer", "Online" });
             comboBox1.SelectedIndex = 0;
 
-            // Floating DB status
+
             _lblDbStatus = new Label
             {
                 AutoSize = true, Anchor = AnchorStyles.Bottom | AnchorStyles.Right,
@@ -118,9 +110,7 @@ namespace Vehical_Rental_Management_System
             _lblDbStatus.BringToFront();
         }
 
-        // ================================================================
-        // FORM LOAD
-        // ================================================================
+
         private void frmPayment_Load(object sender, EventArgs e)
         {
             TryConnectDb();
@@ -131,9 +121,7 @@ namespace Vehical_Rental_Management_System
             SetPanelReadOnly(true);
         }
 
-        // ================================================================
-        // DATA TIER – DB initialisation
-        // ================================================================
+
         private void TryConnectDb()
         {
             try
@@ -141,7 +129,7 @@ namespace Vehical_Rental_Management_System
                 using var conn = new MySqlConnection(_connStr);
                 conn.Open();
 
-                // Payments table
+
                 new MySqlCommand(@"
                     CREATE TABLE IF NOT EXISTS payments (
                         PaymentID    INT AUTO_INCREMENT PRIMARY KEY,
@@ -173,9 +161,7 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // ================================================================
-        // TOOLBAR – New Payment: reset form
-        // ================================================================
+
         private void BtnNewPayment_Click(object? sender, EventArgs e)
         {
             _fromReturnFlow = false;
@@ -186,9 +172,7 @@ namespace Vehical_Rental_Management_System
             txtRentalID.Focus();
         }
 
-        // ================================================================
-        // TOOLBAR – Load Rental from txtSearch (by Rental ID or Customer name)
-        // ================================================================
+
         private void BtnLoad_Click(object? sender, EventArgs e)
         {
             string q = txtSearch.Text.Trim();
@@ -201,7 +185,7 @@ namespace Vehical_Rental_Management_System
             }
             else
             {
-                // Demo prefill
+
                 txtRentalID.Text  = "R-2024-001";
                 txtCustomer.Text  = "Anura Perera";
                 txtVehicle.Text   = "Toyota Aqua – CAB-1234";
@@ -215,14 +199,10 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // ================================================================
-        // SEARCH GO
-        // ================================================================
+
         private void BtnGo_Click(object? sender, EventArgs e) => BtnLoad_Click(sender, e);
 
-        // ================================================================
-        // RECALCULATE totals
-        // ================================================================
+
         private void BtnRecalculate_Click(object? sender, EventArgs e) => Recalculate();
 
         private void Recalculate()
@@ -244,12 +224,9 @@ namespace Vehical_Rental_Management_System
 
         private void dateTimePicker1_ValueChanged(object? sender, EventArgs e)
         {
-            // Intentionally empty — date is read at process time.
         }
 
-        // ================================================================
-        // PROCESS PAYMENT – save to DB and generate receipt
-        // ================================================================
+
         private void BtnProcessPayment_Click(object? sender, EventArgs e)
         {
             if (!ValidatePayment()) return;
@@ -303,16 +280,12 @@ namespace Vehical_Rental_Management_System
             SetPanelReadOnly(true);
         }
 
-        // ================================================================
-        // CLEAR, REFRESH, PRINT
-        // ================================================================
+
         private void BtnClear_Click(object? sender, EventArgs e)   { ClearPaymentPanel(); SetPanelReadOnly(true); }
         private void BtnRefresh_Click(object? sender, EventArgs e) { TryConnectDb(); LoadRecentPayments(); }
         private void BtnPrint_Click(object? sender, EventArgs e)   => DoPrint();
 
-        // ================================================================
-        // DATA TIER – Load recent payments into dgvPayments
-        // ================================================================
+
         private void LoadRecentPayments(string filter = "")
         {
             var dt = new DataTable();
@@ -339,11 +312,11 @@ namespace Vehical_Rental_Management_System
                             $"LKR {Convert.ToDecimal(rdr[4]):F2}", rdr[5],
                             Convert.ToDateTime(rdr[6]).ToString("yyyy-MM-dd"));
                 }
-                catch { /* silently use empty dt */ }
+                catch { }
             }
             else
             {
-                // Demo row
+
                 dt.Rows.Add(1, "R-2024-001", "Anura Perera", "Toyota Aqua",
                     "LKR 37500.00", "Cash", DateTime.Today.ToString("yyyy-MM-dd"));
             }
@@ -352,9 +325,7 @@ namespace Vehical_Rental_Management_System
             dgvPayments.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // ================================================================
-        // HELPER – Load rental details from DB
-        // ================================================================
+
         private void LoadRentalFromDb(string q)
         {
             try
@@ -362,7 +333,7 @@ namespace Vehical_Rental_Management_System
                 using var conn = new MySqlConnection(_connStr);
                 conn.Open();
 
-                // Try to find a rentals table; graceful fail if missing
+
                 var sql = @"SELECT r.RentalID, c.FullName AS Customer,
                                    v.RegNo AS PlateNo,
                                    CONCAT(r.StartDate,' → ',r.EndDate) AS Period,
@@ -401,9 +372,7 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // ================================================================
-        // HELPER – Collect payment from form fields
-        // ================================================================
+
         private Payment CollectPayment() => new Payment
         {
             RentalID    = _loadedRentalID > 0 ? _loadedRentalID : 0,
@@ -440,9 +409,7 @@ namespace Vehical_Rental_Management_System
             cmd.Parameters.AddWithValue("@ref",   p.Reference);
         }
 
-        // ================================================================
-        // RECEIPT – generate text preview and print
-        // ================================================================
+
         private void GenerateReceipt(Payment p)
         {
             var sb = new StringBuilder();
@@ -489,9 +456,7 @@ namespace Vehical_Rental_Management_System
             dlg.ShowDialog();
         }
 
-        // ================================================================
-        // HELPER – Validation
-        // ================================================================
+
         private bool ValidatePayment()
         {
             if (string.IsNullOrWhiteSpace(txtCustomer.Text))
@@ -508,9 +473,7 @@ namespace Vehical_Rental_Management_System
             return true;
         }
 
-        // ================================================================
-        // HELPER – Read-only toggle
-        // ================================================================
+
         private void SetPanelReadOnly(bool readOnly)
         {
             foreach (Control ctrl in grpPayment.Controls)
@@ -530,9 +493,7 @@ namespace Vehical_Rental_Management_System
             btnRecalculate.Enabled    = !readOnly;
         }
 
-        // ================================================================
-        // HELPER – Clear payment panel
-        // ================================================================
+
         private void ClearPaymentPanel()
         {
             _fromReturnFlow = false;
@@ -557,17 +518,13 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // ================================================================
-        // HELPER – numeric parsing
-        // ================================================================
+
         private static decimal ParseDecimal(string s)
             => decimal.TryParse(s, out var v) ? v : 0;
         private static int ParseInt(string s)
             => int.TryParse(s, out var v) ? v : 0;
 
-        // ================================================================
-        // HELPER – Message boxes
-        // ================================================================
+
         private static void ShowSuccess(string msg) =>
             MessageBox.Show(msg, "Success",    MessageBoxButtons.OK, MessageBoxIcon.Information);
         private static void ShowWarning(string msg) =>

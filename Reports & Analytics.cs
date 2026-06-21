@@ -8,20 +8,18 @@ namespace Vehical_Rental_Management_System
 {
     public partial class Form8 : Form
     {
-        // Connection string for local XAMPP MySQL
+
         string connectionString = DatabaseConnection.ConnectionString;
 
         public Form8()
         {
             InitializeComponent();
             
-            // Wire up events manually to avoid touching the .Designer.cs file
             this.Load += Form8_Load;
-            this.button1.Click += button1_Click; // Refresh Data
-            this.button2.Click += button2_Click; // Export CSV
-            this.button3.Click += button3_Click; // Apply Filter
+            this.button1.Click += button1_Click;
+            this.button2.Click += button2_Click;
+            this.button3.Click += button3_Click;
             
-            // Wire up menu items
             this.exportCSVToolStripMenuItem.Click += button2_Click;
             this.generateReportsToolStripMenuItem.Click += button1_Click;
         }
@@ -78,7 +76,6 @@ namespace Vehical_Rental_Management_System
 
         private void LoadKPIs(MySqlConnection con, string dateFilter)
         {
-            // Total Revenue (label3)
             string q1 = $"SELECT IFNULL(SUM(TotalAmount), 0) FROM rentals WHERE 1=1 {dateFilter}";
             using (MySqlCommand cmd = new MySqlCommand(q1, con))
             {
@@ -86,7 +83,6 @@ namespace Vehical_Rental_Management_System
                 label3.Text = $"LKR {totalRev:N2}";
             }
 
-            // Active Rentals (label5)
             string q2 = "SELECT COUNT(*) FROM rentals WHERE Status = 'Active'";
             using (MySqlCommand cmd = new MySqlCommand(q2, con))
             {
@@ -94,7 +90,6 @@ namespace Vehical_Rental_Management_System
                 label5.Text = activeRentals.ToString();
             }
 
-            // Total Customers (label7)
             string q3 = "SELECT COUNT(*) FROM customers";
             using (MySqlCommand cmd = new MySqlCommand(q3, con))
             {
@@ -102,7 +97,6 @@ namespace Vehical_Rental_Management_System
                 label7.Text = totalCustomers.ToString();
             }
 
-            // Avg Rental Days (label9)
             string q4 = $"SELECT IFNULL(AVG(DATEDIFF(EndDate, StartDate)), 0) FROM rentals WHERE 1=1 {dateFilter}";
             using (MySqlCommand cmd = new MySqlCommand(q4, con))
             {
@@ -161,12 +155,12 @@ namespace Vehical_Rental_Management_System
 
         private void button1_Click(object sender, EventArgs e)
         {
-            LoadAllReports(); // Refresh Data
+            LoadAllReports();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            LoadAllReports(); // Apply Filter
+            LoadAllReports();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -185,7 +179,6 @@ namespace Vehical_Rental_Management_System
             {
                 using (StreamWriter sw = new StreamWriter(filename))
                 {
-                    // Headers
                     for (int i = 0; i < dgv.Columns.Count; i++)
                     {
                         sw.Write(dgv.Columns[i].HeaderText);
@@ -193,7 +186,6 @@ namespace Vehical_Rental_Management_System
                     }
                     sw.WriteLine();
 
-                    // Data
                     foreach (DataGridViewRow row in dgv.Rows)
                     {
                         if (row.IsNewRow) continue;

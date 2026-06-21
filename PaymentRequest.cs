@@ -1,8 +1,6 @@
 namespace Vehical_Rental_Management_System
 {
-    /// <summary>
-    /// Payment totals calculated on the Return form and passed to the Payment form.
-    /// </summary>
+
     public sealed class PaymentRequest
     {
         public int     RentalID     { get; init; }

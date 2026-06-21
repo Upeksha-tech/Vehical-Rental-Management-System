@@ -11,48 +11,43 @@ namespace Vehical_Rental_Management_System
 {
     public partial class Form3 : Form
     {
-        // Connection string for local XAMPP MySQL
+
         string connectionString = DatabaseConnection.ConnectionString;
 
         public Form3()
         {
             InitializeComponent();
             
-            // Wire up events manually to avoid touching the .Designer.cs file
             this.Load += Form3_Load;
-            this.button6.Click += button6_Click; // Save
-            this.button3.Click += button3_Click; // Delete
-            this.button4.Click += button4_Click; // Search
-            this.button5.Click += button5_Click; // Reset
-            this.button7.Click += button7_Click; // Clear
+            this.button6.Click += button6_Click;
+            this.button3.Click += button3_Click;
+            this.button4.Click += button4_Click;
+            this.button5.Click += button5_Click;
+            this.button7.Click += button7_Click;
             backToolStripMenuItem.Click += (s, e) => Close();
             refreshToolStripMenuItem.Click += (s, e) => LoadData();
         }
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            // Ensure full row selection for delete to work properly when clicking on a cell
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             
-            // Fit the table columns to the size of the DataGridView
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             
             LoadDropdowns();
             LoadData();
         }
 
-        // --- Dropdown Lists ---
+
         private void LoadDropdowns()
         {
-            // Populate Vehicle Type (comboBox1)
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(new string[] { "Car", "Van", "SUV", "Truck", "Bus" });
-            // Populate Status (comboBox2)
             comboBox2.Items.Clear();
             comboBox2.Items.AddRange(new string[] { "Available", "Rented", "Maintenance" });
         }
 
-        // --- Database Connect / Load Data ---
+
         private void LoadData()
         {
             try
@@ -72,19 +67,19 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // Helper method to clear all textboxes and selections
+
         private void ClearFields()
         {
-            textBox2.Clear(); // Brand
-            textBox3.Clear(); // Model
-            comboBox1.SelectedIndex = -1; // Type
-            textBox4.Clear(); // Reg. Number
-            textBox5.Clear(); // Daily Rate
-            textBox6.Clear(); // Year
-            comboBox2.SelectedIndex = -1; // Status
+            textBox2.Clear();
+            textBox3.Clear();
+            comboBox1.SelectedIndex = -1;
+            textBox4.Clear();
+            textBox5.Clear();
+            textBox6.Clear();
+            comboBox2.SelectedIndex = -1;
         }
 
-        //Add Vehicle
+
         private void button6_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBox4.Text))
@@ -110,7 +105,6 @@ namespace Vehical_Rental_Management_System
                 using (MySqlConnection con = new MySqlConnection(connectionString))
                 {
                     con.Open();
-                    // Using your table 'vehicle' with exact column names wrapped in backticks
                     string query = "INSERT INTO vehicle (`Brand`, `Model`, `Type`, `RegNo`, `DailyRate`, `ManufactureYear`, `Status`) " +
                                    "VALUES (@Brand, @Model, @Type, @RegNumber, @DailyRate, @Year, @Status)";
                     using (MySqlCommand cmd = new MySqlCommand(query, con))
@@ -125,8 +119,8 @@ namespace Vehical_Rental_Management_System
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Vehicle details saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        LoadData(); // Refresh grid
-                        ClearFields(); // Clear inputs
+                        LoadData();
+                        ClearFields();
                     }
                 }
             }
@@ -136,12 +130,11 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        //Delete Button
+
         private void button3_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                // Using ID as the primary key for deletion
                 string id = dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString();
                 DialogResult dr = MessageBox.Show($"Are you sure you want to delete vehicle with ID {id}?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dr == DialogResult.Yes)
@@ -173,7 +166,7 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // Search Vehicle
+
         private void button4_Click(object sender, EventArgs e)
         {
             try
@@ -181,7 +174,6 @@ namespace Vehical_Rental_Management_System
                 using (MySqlConnection con = new MySqlConnection(connectionString))
                 {
                     con.Open();
-                    // Searches by RegNo, Brand, or Model based on textBox1
                     string query = "SELECT * FROM vehicle WHERE `RegNo` LIKE @Search OR `Brand` LIKE @Search OR `Model` LIKE @Search";
                     MySqlDataAdapter da = new MySqlDataAdapter(query, con);
                     da.SelectCommand.Parameters.AddWithValue("@Search", "%" + textBox1.Text + "%");
@@ -197,14 +189,14 @@ namespace Vehical_Rental_Management_System
             }
         }
 
-        // Reset Search
+
         private void button5_Click(object sender, EventArgs e)
         {
-            textBox1.Clear(); // Clear search box
-            LoadData(); // Load all data again
+            textBox1.Clear();
+            LoadData();
         }
 
-        // Clear Fields
+
         private void button7_Click(object sender, EventArgs e)
         {
             ClearFields();

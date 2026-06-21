@@ -2,9 +2,7 @@ using System;
 
 namespace Vehical_Rental_Management_System
 {
-    // =====================================================================
-    // DATA TIER: Customer Entity Model
-    // =====================================================================
+
     public class Customer
     {
         public int      CustomerID     { get; set; }

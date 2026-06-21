@@ -34,7 +34,6 @@ namespace Vehical_Rental_Management_System
             LoadFormData();
         }
 
-        // Designer event hook (keeps Designer file unchanged)
         private void btnSearch_Click(object sender, EventArgs e) => BtnSearch_Click(sender, e);
 
         private void LoadFormData()
@@ -98,7 +97,7 @@ namespace Vehical_Rental_Management_System
                 while (rdr.Read())
                     cmbType.Items.Add(rdr.GetString("Type"));
             }
-            catch { /* ignore */ }
+            catch { }
 
             cmbType.Items.Insert(0, "All Types");
             if (cmbType.Items.Count > 0)

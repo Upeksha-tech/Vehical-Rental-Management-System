@@ -2,9 +2,7 @@ using System;
 
 namespace Vehical_Rental_Management_System
 {
-    // =====================================================================
-    // DATA TIER: Payment Entity Model
-    // =====================================================================
+
     public class Payment
     {
         public int     PaymentID    { get; set; }

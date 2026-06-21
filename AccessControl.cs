@@ -20,12 +20,7 @@ namespace Vehical_Rental_Management_System
         Full
     }
 
-    /// <summary>
-    /// Role-based access control for all modules.
-    /// Roles: Manager, Staff (must match login + MySQL users.role).
-    /// Manager: Full access to all modules
-    /// Staff: Access to Booking, Return, and Payments only
-    /// </summary>
+
     internal static class AccessControl
     {
         public static AccessLevel GetAccess(AppModule module, string? role = null)
@@ -59,9 +54,7 @@ namespace Vehical_Rental_Management_System
                 MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// Disables save/delete/action controls when the user has read-only access.
-        /// </summary>
+
         public static void ApplyModulePermissions(Form form, AppModule module)
         {
             if (GetAccess(module) != AccessLevel.ReadOnly)
