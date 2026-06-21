@@ -586,6 +586,7 @@
             Name = "frmPayment";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Payment & Billing Center";
+            Load += frmPayment_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             grpPayment.ResumeLayout(false);
