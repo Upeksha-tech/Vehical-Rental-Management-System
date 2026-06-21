@@ -39,26 +39,26 @@
             label1 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel1 = new Panel();
-            panel2 = new Panel();
-            panel3 = new Panel();
-            panel4 = new Panel();
-            panel5 = new Panel();
-            panel6 = new Panel();
-            panel7 = new Panel();
-            panel8 = new Panel();
-            label2 = new Label();
             label3 = new Label();
-            label4 = new Label();
+            label2 = new Label();
+            panel5 = new Panel();
+            panel2 = new Panel();
             label5 = new Label();
-            label6 = new Label();
+            label4 = new Label();
+            panel6 = new Panel();
+            panel3 = new Panel();
             label7 = new Label();
-            label8 = new Label();
+            label6 = new Label();
+            panel7 = new Panel();
+            panel4 = new Panel();
             label9 = new Label();
+            label8 = new Label();
+            panel8 = new Panel();
             groupBox1 = new GroupBox();
-            groupBox2 = new GroupBox();
-            groupBox3 = new GroupBox();
             dataGridView1 = new DataGridView();
+            groupBox2 = new GroupBox();
             dataGridView2 = new DataGridView();
+            groupBox3 = new GroupBox();
             dataGridView3 = new DataGridView();
             menuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -67,10 +67,10 @@
             panel3.SuspendLayout();
             panel4.SuspendLayout();
             groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
-            groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
             SuspendLayout();
             // 
@@ -175,6 +175,32 @@
             panel1.Size = new Size(314, 66);
             panel1.TabIndex = 0;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(41, 33);
+            label3.Name = "label3";
+            label3.Size = new Size(50, 20);
+            label3.TabIndex = 2;
+            label3.Text = "label3";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(19, 8);
+            label2.Name = "label2";
+            label2.Size = new Size(123, 20);
+            label2.TabIndex = 1;
+            label2.Text = "💰Total Revenue";
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.DodgerBlue;
+            panel5.Location = new Point(0, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(13, 66);
+            panel5.TabIndex = 0;
+            // 
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.Fixed3D;
@@ -185,6 +211,32 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(319, 66);
             panel2.TabIndex = 1;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(44, 33);
+            label5.Name = "label5";
+            label5.Size = new Size(50, 20);
+            label5.TabIndex = 2;
+            label5.Text = "label5";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(19, 8);
+            label4.Name = "label4";
+            label4.Size = new Size(123, 20);
+            label4.TabIndex = 1;
+            label4.Text = "🚗Active Rentals";
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.DodgerBlue;
+            panel6.Location = new Point(0, 0);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(13, 66);
+            panel6.TabIndex = 0;
             // 
             // panel3
             // 
@@ -197,6 +249,32 @@
             panel3.Size = new Size(316, 66);
             panel3.TabIndex = 2;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(43, 33);
+            label7.Name = "label7";
+            label7.Size = new Size(50, 20);
+            label7.TabIndex = 9;
+            label7.Text = "label7";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(20, 8);
+            label6.Name = "label6";
+            label6.Size = new Size(136, 20);
+            label6.TabIndex = 8;
+            label6.Text = "👥Total Customers";
+            // 
+            // panel7
+            // 
+            panel7.BackColor = Color.DodgerBlue;
+            panel7.Location = new Point(0, 0);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(14, 66);
+            panel7.TabIndex = 7;
+            // 
             // panel4
             // 
             panel4.BorderStyle = BorderStyle.Fixed3D;
@@ -208,91 +286,14 @@
             panel4.Size = new Size(313, 66);
             panel4.TabIndex = 3;
             // 
-            // panel5
+            // label9
             // 
-            panel5.BackColor = Color.DodgerBlue;
-            panel5.Location = new Point(0, 0);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(13, 66);
-            panel5.TabIndex = 0;
-            // 
-            // panel6
-            // 
-            panel6.BackColor = Color.DodgerBlue;
-            panel6.Location = new Point(0, 0);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(13, 66);
-            panel6.TabIndex = 0;
-            // 
-            // panel7
-            // 
-            panel7.BackColor = Color.DodgerBlue;
-            panel7.Location = new Point(0, 0);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(14, 66);
-            panel7.TabIndex = 7;
-            // 
-            // panel8
-            // 
-            panel8.BackColor = Color.DodgerBlue;
-            panel8.Location = new Point(0, 0);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(13, 66);
-            panel8.TabIndex = 7;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(19, 8);
-            label2.Name = "label2";
-            label2.Size = new Size(123, 20);
-            label2.TabIndex = 1;
-            label2.Text = "💰Total Revenue";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(41, 33);
-            label3.Name = "label3";
-            label3.Size = new Size(50, 20);
-            label3.TabIndex = 2;
-            label3.Text = "label3";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(19, 8);
-            label4.Name = "label4";
-            label4.Size = new Size(123, 20);
-            label4.TabIndex = 1;
-            label4.Text = "🚗Active Rentals";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(44, 33);
-            label5.Name = "label5";
-            label5.Size = new Size(50, 20);
-            label5.TabIndex = 2;
-            label5.Text = "label5";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(20, 8);
-            label6.Name = "label6";
-            label6.Size = new Size(136, 20);
-            label6.TabIndex = 8;
-            label6.Text = "👥Total Customers";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(43, 33);
-            label7.Name = "label7";
-            label7.Size = new Size(50, 20);
-            label7.TabIndex = 9;
-            label7.Text = "label7";
+            label9.AutoSize = true;
+            label9.Location = new Point(44, 33);
+            label9.Name = "label9";
+            label9.Size = new Size(50, 20);
+            label9.TabIndex = 9;
+            label9.Text = "label9";
             // 
             // label8
             // 
@@ -303,14 +304,13 @@
             label8.TabIndex = 8;
             label8.Text = "🗓️Avg Rental Days";
             // 
-            // label9
+            // panel8
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(44, 33);
-            label9.Name = "label9";
-            label9.Size = new Size(50, 20);
-            label9.TabIndex = 9;
-            label9.Text = "label9";
+            panel8.BackColor = Color.DodgerBlue;
+            panel8.Location = new Point(0, 0);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(13, 66);
+            panel8.TabIndex = 7;
             // 
             // groupBox1
             // 
@@ -322,6 +322,15 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "🚗Revenue by Category";
             // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(6, 26);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(681, 188);
+            dataGridView1.TabIndex = 0;
+            // 
             // groupBox2
             // 
             groupBox2.Controls.Add(dataGridView2);
@@ -332,6 +341,15 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "📅Top Customers";
             // 
+            // dataGridView2
+            // 
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Location = new Point(6, 26);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.RowHeadersWidth = 51;
+            dataGridView2.Size = new Size(666, 188);
+            dataGridView2.TabIndex = 0;
+            // 
             // groupBox3
             // 
             groupBox3.Controls.Add(dataGridView3);
@@ -341,24 +359,6 @@
             groupBox3.TabIndex = 9;
             groupBox3.TabStop = false;
             groupBox3.Text = "📈Monthly Revenue Trend";
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(6, 26);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(681, 188);
-            dataGridView1.TabIndex = 0;
-            // 
-            // dataGridView2
-            // 
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(6, 26);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersWidth = 51;
-            dataGridView2.Size = new Size(666, 188);
-            dataGridView2.TabIndex = 0;
             // 
             // dataGridView3
             // 
@@ -387,6 +387,7 @@
             MainMenuStrip = menuStrip1;
             Name = "Form8";
             Text = "Reports & Analytics";
+            Load += this.Form8_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
@@ -399,10 +400,10 @@
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             groupBox1.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
-            groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView3).EndInit();
             ResumeLayout(false);
             PerformLayout();
