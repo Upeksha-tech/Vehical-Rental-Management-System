@@ -5,6 +5,7 @@ namespace Vehical_Rental_Management_System
         public bookingForm()
         {
             InitializeComponent();
+            backToolStripMenuItem.Click += (s, e) => Close();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

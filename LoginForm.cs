@@ -20,14 +20,7 @@ namespace Vehical_Rental_Management_System
         /// Default XAMPP settings: host=localhost, port=3306, user=root, password="" (empty).
         /// Change "database" to match your schema name.
         /// </summary>
-        private const string MySqlConnectionString =
-            "Server=localhost;" +
-            "Port=3306;" +
-            "Database=VehicleRentalDB;" +
-            "Uid=root;" +
-            "Pwd=;" +                    // ← set your MySQL root password here if any
-            "Connect Timeout=10;" +
-            "SslMode=Disabled;";         // MySql.Data v9: use 'Disabled' not 'None'
+        private const string MySqlConnectionString = DatabaseConnection.ConnectionString;
 
         // ── Mock credential store (offline fallback) ──────────────────────────
         // { username, password, role }  — case-sensitive passwords
@@ -42,7 +35,7 @@ namespace Vehical_Rental_Management_System
         // ── State ────────────────────────────────────────────────────────────
         // true  = use hardcoded mock users (no DB needed, good for testing)
         // false = connect to XAMPP MySQL (make sure VehicleRentalDB exists)
-        private bool _useMockAuth = true;
+        private bool _useMockAuth = false;
 
         public string LoggedInUser { get; private set; } = string.Empty;
         public string LoggedInRole { get; private set; } = string.Empty;

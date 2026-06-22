@@ -12,7 +12,7 @@ namespace Vehical_Rental_Management_System
     public partial class Form3 : Form
     {
         // Connection string for local XAMPP MySQL
-        string connectionString = "Server=localhost;Database=vehicle_project;Uid=root;Pwd=;";
+        string connectionString = DatabaseConnection.ConnectionString;
 
         public Form3()
         {
@@ -25,6 +25,8 @@ namespace Vehical_Rental_Management_System
             this.button4.Click += button4_Click; // Search
             this.button5.Click += button5_Click; // Reset
             this.button7.Click += button7_Click; // Clear
+            backToolStripMenuItem.Click += (s, e) => Close();
+            refreshToolStripMenuItem.Click += (s, e) => LoadData();
         }
 
         private void Form3_Load(object sender, EventArgs e)
