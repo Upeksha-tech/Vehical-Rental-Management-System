@@ -15,8 +15,7 @@ namespace Vehical_Rental_Management_System
     public partial class frmCustomer : Form
     {
         // ── Connection String ────────────────────────────────────────────
-        private readonly string _connStr =
-            "server=localhost;database=vehicaldb;uid=root;pwd=;";
+        private readonly string _connStr = DatabaseConnection.ConnectionString;
 
         // ── State ────────────────────────────────────────────────────────
         private bool _isDbAvailable = false;
@@ -87,7 +86,7 @@ namespace Vehical_Rental_Management_System
                 // 1. Ensure database exists
                 using var rootConn = new MySqlConnection("server=localhost;uid=root;pwd=;");
                 rootConn.Open();
-                new MySqlCommand("CREATE DATABASE IF NOT EXISTS vehicaldb;", rootConn)
+                new MySqlCommand("CREATE DATABASE IF NOT EXISTS VehicleRentalDB;", rootConn)
                     .ExecuteNonQuery();
 
                 // 2. Ensure customers table exists (schema matches proposal)

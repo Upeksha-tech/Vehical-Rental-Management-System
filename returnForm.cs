@@ -13,6 +13,7 @@ namespace Vehical_Rental_Management_System
         public returnForm()
         {
             InitializeComponent();
+            returnToolStripMenuItem.Click += (s, e) => Close();
         }
     }
 }

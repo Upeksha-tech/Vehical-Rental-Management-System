@@ -14,8 +14,7 @@ namespace Vehical_Rental_Management_System
     public partial class frmPayment : Form
     {
         // ── Connection String ────────────────────────────────────────────
-        private readonly string _connStr =
-            "server=localhost;database=vehicaldb;uid=root;pwd=;";
+        private readonly string _connStr = DatabaseConnection.ConnectionString;
 
         // ── State ────────────────────────────────────────────────────────
         private bool _isDbAvailable  = false;
@@ -303,12 +302,13 @@ namespace Vehical_Rental_Management_System
                 conn.Open();
 
                 // Try to find a rentals table; graceful fail if missing
-                var sql = @"SELECT r.RentalID, CONCAT(c.FullName) AS Customer,
-                                   v.PlateNo, CONCAT(r.StartDate,' → ',r.EndDate) AS Period,
+                var sql = @"SELECT r.RentalID, c.FullName AS Customer,
+                                   v.`Reg. No` AS PlateNo,
+                                   CONCAT(r.StartDate,' → ',r.EndDate) AS Period,
                                    r.TotalAmount AS Base
                             FROM rentals r
                             JOIN customers c ON r.CustomerID = c.CustomerID
-                            JOIN vehicles  v ON r.VehicleID  = v.VehicleID
+                            JOIN vehicle   v ON r.VehicleID  = v.ID
                             WHERE r.Status = 'Active'
                               AND (CAST(r.RentalID AS CHAR) LIKE @q OR c.FullName LIKE @q)
                             LIMIT 1;";
