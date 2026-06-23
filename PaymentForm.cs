@@ -19,10 +19,55 @@ namespace Vehical_Rental_Management_System
         // ── State ────────────────────────────────────────────────────────
         private bool _isDbAvailable  = false;
         private int  _loadedRentalID = -1;
+        private bool _fromReturnFlow = false;
         private Label _lblDbStatus   = null!;
 
-        // ── Receipt content to print ─────────────────────────────────────
+        public bool PaymentCompleted { get; private set; }
+
         private string _receiptText = string.Empty;
+
+        /// <summary>
+        /// Pre-fills payment fields from the Return form (final calculated charges).
+        /// </summary>
+        public void LoadFromReturn(PaymentRequest request)
+        {
+            _fromReturnFlow    = true;
+            PaymentCompleted   = false;
+            _loadedRentalID    = request.RentalID;
+
+            txtRentalID.Text   = request.RentalID.ToString();
+            txtCustomer.Text   = request.Customer;
+            txtVehicle.Text    = request.Vehicle;
+            txtPeriod.Text     = request.Period;
+            txtBase.Text       = request.BaseAmount.ToString("F2");
+            txtOverdue.Text    = request.OverdueDays.ToString();
+            txtPenalty.Text    = request.PenaltyRate.ToString("F2");
+            txtLatePenalty.Text = request.LatePenalty.ToString("F2");
+            txtTotalDue.Text   = request.TotalDue.ToString("F2");
+            txtDiscount.Text   = request.Discount.ToString("F2");
+            txtFinal.Text      = request.FinalAmount.ToString("F2");
+            dtpDate.Value      = DateTime.Today;
+
+            SetPanelReadOnly(false);
+            ApplyReturnFlowFieldLocks();
+            btnProcessPayment.Enabled = true;
+            btnRecalculate.Enabled    = true;
+        }
+
+        private void ApplyReturnFlowFieldLocks()
+        {
+            if (!_fromReturnFlow) return;
+
+            txtRentalID.ReadOnly     = true;
+            txtCustomer.ReadOnly     = true;
+            txtVehicle.ReadOnly      = true;
+            txtPeriod.ReadOnly       = true;
+            txtBase.ReadOnly         = true;
+            txtOverdue.ReadOnly      = true;
+            txtPenalty.ReadOnly      = true;
+            txtLatePenalty.ReadOnly  = true;
+            txtTotalDue.ReadOnly     = true;
+        }
 
         // ================================================================
         // CONSTRUCTOR
@@ -79,6 +124,9 @@ namespace Vehical_Rental_Management_System
         private void frmPayment_Load(object sender, EventArgs e)
         {
             TryConnectDb();
+            if (_fromReturnFlow)
+                return;
+
             LoadRecentPayments();
             SetPanelReadOnly(true);
         }
@@ -110,7 +158,7 @@ namespace Vehical_Rental_Management_System
                         FinalAmount  DECIMAL(10,2) NOT NULL,
                         Method       VARCHAR(50)   NOT NULL,
                         PayDate      DATE          NOT NULL,
-                        Reference    VARCHAR(100)  NOT NULL DEFAULT ''
+                        ReferenceNo  VARCHAR(100)  NOT NULL DEFAULT ''
                     );", conn).ExecuteNonQuery();
 
                 _isDbAvailable = true;
@@ -130,8 +178,10 @@ namespace Vehical_Rental_Management_System
         // ================================================================
         private void BtnNewPayment_Click(object? sender, EventArgs e)
         {
+            _fromReturnFlow = false;
             _loadedRentalID = -1;
             ClearPaymentPanel();
+            ResetFieldReadOnlyStates();
             SetPanelReadOnly(false);
             txtRentalID.Focus();
         }
@@ -218,7 +268,7 @@ namespace Vehical_Rental_Management_System
                         INSERT INTO payments
                             (RentalID, Customer, Vehicle, Period, BaseAmount, OverdueDays,
                              PenaltyRate, LatePenalty, TotalDue, Discount, FinalAmount,
-                             Method, PayDate, Reference)
+                             Method, PayDate, ReferenceNo)
                         VALUES
                             (@rid,@cust,@veh,@per,@base,@od,@prate,@lp,@td,@disc,@fin,
                              @meth,@pdate,@ref);", conn);
@@ -239,6 +289,17 @@ namespace Vehical_Rental_Management_System
 
             GenerateReceipt(p);
             LoadRecentPayments();
+
+            PaymentCompleted = true;
+
+            if (_fromReturnFlow)
+            {
+                ShowSuccess("Payment processed successfully.");
+                DialogResult = DialogResult.OK;
+                Close();
+                return;
+            }
+
             SetPanelReadOnly(true);
         }
 
@@ -303,7 +364,7 @@ namespace Vehical_Rental_Management_System
 
                 // Try to find a rentals table; graceful fail if missing
                 var sql = @"SELECT r.RentalID, c.FullName AS Customer,
-                                   v.`Reg. No` AS PlateNo,
+                                   v.RegNo AS PlateNo,
                                    CONCAT(r.StartDate,' → ',r.EndDate) AS Period,
                                    r.TotalAmount AS Base
                             FROM rentals r
@@ -439,8 +500,11 @@ namespace Vehical_Rental_Management_System
             { ShowWarning("Base Amount is required."); return false; }
             if (!decimal.TryParse(txtBase.Text, out decimal ba) || ba < 0)
             { ShowWarning("Base Amount must be a valid positive number."); return false; }
-            if (!decimal.TryParse(txtDiscount.Text.Replace("", "0"), out decimal disc) || disc < 0)
+
+            string discountText = string.IsNullOrWhiteSpace(txtDiscount.Text) ? "0" : txtDiscount.Text.Trim();
+            if (!decimal.TryParse(discountText, out decimal disc) || disc < 0)
             { ShowWarning("Discount must be a valid non-negative number."); return false; }
+
             return true;
         }
 
@@ -471,6 +535,7 @@ namespace Vehical_Rental_Management_System
         // ================================================================
         private void ClearPaymentPanel()
         {
+            _fromReturnFlow = false;
             _loadedRentalID = -1;
             txtRentalID.Clear(); txtCustomer.Clear(); txtVehicle.Clear();
             txtPeriod.Clear();   txtBase.Clear();     txtOverdue.Clear();
@@ -480,6 +545,16 @@ namespace Vehical_Rental_Management_System
             comboBox1.SelectedIndex = 0;
             richTextBox1.Clear();
             _receiptText = string.Empty;
+            ResetFieldReadOnlyStates();
+        }
+
+        private void ResetFieldReadOnlyStates()
+        {
+            foreach (Control ctrl in grpPayment.Controls)
+            {
+                if (ctrl is TextBox tb)
+                    tb.ReadOnly = false;
+            }
         }
 
         // ================================================================

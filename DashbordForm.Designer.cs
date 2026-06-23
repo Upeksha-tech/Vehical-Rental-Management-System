@@ -29,7 +29,6 @@ namespace Vehical_Rental_Management_System
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
@@ -40,7 +39,6 @@ namespace Vehical_Rental_Management_System
             contextMenuStrip1 = new ContextMenuStrip(components);
             panel1 = new Panel();
             button9 = new Button();
-            button8 = new Button();
             button7 = new Button();
             button6 = new Button();
             button3 = new Button();
@@ -63,14 +61,8 @@ namespace Vehical_Rental_Management_System
             label9 = new Label();
             label10 = new Label();
             label11 = new Label();
-            label12 = new Label();
             dataGridView1 = new DataGridView();
-            colCustomer = new DataGridViewTextBoxColumn();
-            colVehicle = new DataGridViewTextBoxColumn();
-            colReturn = new DataGridViewTextBoxColumn();
-            button10 = new Button();
-            button11 = new Button();
-            button12 = new Button();
+            button8 = new Button();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -159,22 +151,6 @@ namespace Vehical_Rental_Management_System
             button9.Text = "🚪 Logout";
             button9.TextAlign = ContentAlignment.MiddleLeft;
             button9.UseVisualStyleBackColor = false;
-            // 
-            // button8
-            // 
-            button8.BackColor = Color.CornflowerBlue;
-            button8.BackgroundImageLayout = ImageLayout.Center;
-            button8.FlatStyle = FlatStyle.Popup;
-            button8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button8.ForeColor = Color.White;
-            button8.Location = new Point(-11, 422);
-            button8.Name = "button8";
-            button8.Padding = new Padding(50, 0, 0, 0);
-            button8.Size = new Size(269, 45);
-            button8.TabIndex = 3;
-            button8.Text = "⚙️ Users";
-            button8.TextAlign = ContentAlignment.MiddleLeft;
-            button8.UseVisualStyleBackColor = false;
             // 
             // button7
             // 
@@ -461,31 +437,19 @@ namespace Vehical_Rental_Management_System
             label11.TabIndex = 3;
             label11.Text = "Recent Rentals\r\n____________________________________________________________";
             // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label12.ForeColor = Color.MidnightBlue;
-            label12.Location = new Point(782, 207);
-            label12.Name = "label12";
-            label12.Size = new Size(492, 56);
-            label12.TabIndex = 3;
-            label12.Text = "Monthly Income (LKR)\r\n____________________________________________________________";
-            // 
             // dataGridView1
             // 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = SystemColors.Window;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.ControlDarkDark;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.ControlDarkDark;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { colCustomer, colVehicle, colReturn });
             dataGridView1.GridColor = SystemColors.ActiveBorder;
             dataGridView1.Location = new Point(260, 266);
             dataGridView1.Name = "dataGridView1";
@@ -494,65 +458,23 @@ namespace Vehical_Rental_Management_System
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(488, 121);
             dataGridView1.TabIndex = 5;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // colCustomer
+            // button8
             // 
-            dataGridViewCellStyle2.BackColor = Color.White;
-            colCustomer.DefaultCellStyle = dataGridViewCellStyle2;
-            colCustomer.HeaderText = "Customer";
-            colCustomer.MinimumWidth = 6;
-            colCustomer.Name = "colCustomer";
-            // 
-            // colVehicle
-            // 
-            colVehicle.HeaderText = "Vehicle";
-            colVehicle.MinimumWidth = 6;
-            colVehicle.Name = "colVehicle";
-            // 
-            // colReturn
-            // 
-            colReturn.HeaderText = "Return";
-            colReturn.MinimumWidth = 6;
-            colReturn.Name = "colReturn";
-            // 
-            // button10
-            // 
-            button10.BackColor = Color.CornflowerBlue;
-            button10.BackgroundImageLayout = ImageLayout.Center;
-            button10.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button10.ForeColor = Color.White;
-            button10.Location = new Point(260, 424);
-            button10.Name = "button10";
-            button10.Size = new Size(176, 45);
-            button10.TabIndex = 3;
-            button10.Text = "New Booking";
-            button10.UseVisualStyleBackColor = false;
-            // 
-            // button11
-            // 
-            button11.BackColor = Color.WhiteSmoke;
-            button11.BackgroundImageLayout = ImageLayout.Center;
-            button11.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button11.ForeColor = Color.Black;
-            button11.Location = new Point(456, 424);
-            button11.Name = "button11";
-            button11.Size = new Size(176, 45);
-            button11.TabIndex = 3;
-            button11.Text = "Process Return";
-            button11.UseVisualStyleBackColor = false;
-            // 
-            // button12
-            // 
-            button12.BackColor = Color.WhiteSmoke;
-            button12.BackgroundImageLayout = ImageLayout.Center;
-            button12.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button12.ForeColor = Color.Black;
-            button12.Location = new Point(659, 424);
-            button12.Name = "button12";
-            button12.Size = new Size(176, 45);
-            button12.TabIndex = 3;
-            button12.Text = "View Reports";
-            button12.UseVisualStyleBackColor = false;
+            button8.BackColor = Color.CornflowerBlue;
+            button8.BackgroundImageLayout = ImageLayout.Center;
+            button8.FlatStyle = FlatStyle.Popup;
+            button8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button8.ForeColor = Color.White;
+            button8.Location = new Point(-11, 422);
+            button8.Name = "button8";
+            button8.Padding = new Padding(50, 0, 0, 0);
+            button8.Size = new Size(269, 45);
+            button8.TabIndex = 3;
+            button8.Text = "⚙️ Users";
+            button8.TextAlign = ContentAlignment.MiddleLeft;
+            button8.UseVisualStyleBackColor = false;
             // 
             // Form2
             // 
@@ -562,15 +484,11 @@ namespace Vehical_Rental_Management_System
             ClientSize = new Size(1422, 586);
             Controls.Add(dataGridView1);
             Controls.Add(panel5);
-            Controls.Add(button12);
-            Controls.Add(button11);
-            Controls.Add(button10);
             Controls.Add(panel3);
             Controls.Add(panel4);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
-            Controls.Add(label12);
             Controls.Add(label11);
             Controls.Add(label2);
             MainMenuStrip = menuStrip1;
@@ -607,7 +525,6 @@ namespace Vehical_Rental_Management_System
         private Button button1;
         private Label label1;
         private Button button9;
-        private Button button8;
         private Button button7;
         private Button button6;
         private Button button3;
@@ -628,13 +545,7 @@ namespace Vehical_Rental_Management_System
         private Label label9;
         private Label label10;
         private Label label11;
-        private Label label12;
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn colCustomer;
-        private DataGridViewTextBoxColumn colVehicle;
-        private DataGridViewTextBoxColumn colReturn;
-        private Button button10;
-        private Button button11;
-        private Button button12;
+        private Button button8;
     }
 }
