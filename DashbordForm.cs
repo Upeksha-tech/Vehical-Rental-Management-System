@@ -25,38 +25,29 @@ namespace Vehical_Rental_Management_System
         }
 
         // ── Default constructor (keeps Designer happy) ────────────────────────
-        public Form2() : this("Guest", "Viewer") { }
+        public Form2() : this("Guest", "Staff") { }
 
         // ── Form Load ─────────────────────────────────────────────────────────
         private void Form2_Load(object sender, EventArgs e)
         {
-            // Show the logged-in user and role in the title bar
+            // Show the logged-in user and role in the title bar only (label1 stays as designed)
             Text = $"Vehicle Rental Management System  –  {_loggedInUser} ({_loggedInRole})";
-
-            // Show user info in the navigation panel header (label1 = "NAVIGATION")
-            label1.Text = $"👤 {_loggedInUser}\n{_loggedInRole}";
 
             // ── Wire Logout button ────────────────────────────────────────────
             button9.Click += BtnLogout_Click;
 
             // ── Wire Navigation sidebar buttons ──────────────────────────────
-            button1.Click  += (s, ev) => { /* Dashboard – already here, do nothing */ };
-            button2.Click  += BtnVehicles_Click;       // 🚗 Vehicles
-            button3.Click  += BtnCustomers_Click;      // 👤 Customers
-            button4.Click  += BtnRentalBooking_Click;  // 📋 Rental Booking
-            button5.Click  += BtnReturnVehicle_Click;  // 🔄 Return Vehicle
-            button6.Click  += BtnPayments_Click;       // 💳 Payments
-            button7.Click  += BtnReports_Click;        // 📊 Reports
-            button8.Click  += BtnUsers_Click;          // ⚙️ Users (Admin)
-
-            // ── Wire quick-action buttons (main area) ─────────────────────────
-            button10.Click += BtnRentalBooking_Click;  // New Booking
-            button11.Click += BtnReturnVehicle_Click;  // Process Return
-            button12.Click += BtnReports_Click;        // View Reports
+            button1.Click += (s, ev) => { /* Dashboard – already here, do nothing */ };
+            button2.Click += BtnVehicles_Click;       // 🚗 Vehicles
+            button3.Click += BtnCustomers_Click;      // 👤 Customers
+            button4.Click += BtnRentalBooking_Click;  // 📋 Rental Booking
+            button5.Click += BtnReturnVehicle_Click;  // 🔄 Return Vehicle
+            button6.Click += BtnPayments_Click;       // 💳 Payments
+            button7.Click += BtnReports_Click;        // 📊 Reports
 
             // ── Wire menu strip (logic only – no designer changes) ────────────
             reportsToolStripMenuItem.Click += BtnReports_Click;
-            adminToolStripMenuItem.Click   += BtnUsers_Click;
+            adminToolStripMenuItem.Visible = false;
             modulesToolStripMenuItem.Click += BtnShowModulesMenu;
 
             // Apply role-based visibility (hide buttons the role can't access)
@@ -66,9 +57,17 @@ namespace Vehical_Rental_Management_System
         }
 
         // ── Helper: open a child form modally, then return to dashboard ───────
-        private void OpenChildForm(Form childForm)
+        private void OpenChildForm(Form childForm, AppModule module)
         {
+            if (!AccessControl.CanOpen(module))
+            {
+                AccessControl.ShowDenied(module);
+                return;
+            }
+
             childForm.StartPosition = FormStartPosition.CenterScreen;
+            childForm.Load += (_, __) => AccessControl.ApplyModulePermissions(childForm, module);
+
             Hide();
             try
             {
@@ -92,53 +91,52 @@ namespace Vehical_Rental_Management_System
         // ── Navigation handlers ───────────────────────────────────────────────
         private void BtnVehicles_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Form3());
+            OpenChildForm(new Form3(), AppModule.Vehicles);
         }
 
         private void BtnCustomers_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new frmCustomer());
+            OpenChildForm(new frmCustomer(), AppModule.Customers);
         }
 
         private void BtnRentalBooking_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new bookingForm());
+            OpenChildForm(new bookingForm(), AppModule.Booking);
         }
 
         private void BtnReturnVehicle_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new returnForm());
+            OpenChildForm(new returnForm(), AppModule.Return);
         }
 
         private void BtnPayments_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new frmPayment());
+            OpenChildForm(new frmPayment(), AppModule.Payments);
         }
 
         private void BtnReports_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Form8());
+            OpenChildForm(new Form8(), AppModule.Reports);
         }
 
-        private void BtnUsers_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "User accounts are stored in the VehicleRentalDB → users table.\n" +
-                "Manage them via phpMyAdmin (XAMPP) or extend this module later.",
-                "User Management",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-        }
 
         private void BtnShowModulesMenu(object sender, EventArgs e)
         {
             var menu = new ContextMenuStrip();
-            menu.Items.Add("🚗 Vehicles",       null, (s, ev) => BtnVehicles_Click(s, ev));
-            menu.Items.Add("👤 Customers",      null, (s, ev) => BtnCustomers_Click(s, ev));
-            menu.Items.Add("📋 Rental Booking", null, (s, ev) => BtnRentalBooking_Click(s, ev));
-            menu.Items.Add("🔄 Return Vehicle", null, (s, ev) => BtnReturnVehicle_Click(s, ev));
-            menu.Items.Add("💳 Payments",       null, (s, ev) => BtnPayments_Click(s, ev));
+            AddModuleMenuItem(menu, "🚗 Vehicles", AppModule.Vehicles, BtnVehicles_Click);
+            AddModuleMenuItem(menu, "👤 Customers", AppModule.Customers, BtnCustomers_Click);
+            AddModuleMenuItem(menu, "📋 Rental Booking", AppModule.Booking, BtnRentalBooking_Click);
+            AddModuleMenuItem(menu, "🔄 Return Vehicle", AppModule.Return, BtnReturnVehicle_Click);
+            AddModuleMenuItem(menu, "💳 Payments", AppModule.Payments, BtnPayments_Click);
             menu.Show(menuStrip1, new System.Drawing.Point(0, menuStrip1.Height));
+        }
+
+        private static void AddModuleMenuItem(
+            ContextMenuStrip menu, string text, AppModule module, EventHandler handler)
+        {
+            if (!AccessControl.CanOpen(module))
+                return;
+            menu.Items.Add(text, null, handler);
         }
 
         // ── Load live stats from MySQL (updates existing labels/grid only) ───
@@ -149,9 +147,9 @@ namespace Vehical_Rental_Management_System
                 using var conn = new MySqlConnection(DatabaseConnection.ConnectionString);
                 conn.Open();
 
-                label3.Text  = ScalarInt(conn, "SELECT COUNT(*) FROM vehicle").ToString();
-                label6.Text  = ScalarInt(conn, "SELECT COUNT(*) FROM vehicle WHERE Status = 'Available'").ToString();
-                label8.Text  = ScalarInt(conn, "SELECT COUNT(*) FROM vehicle WHERE Status = 'Rented'").ToString();
+                label3.Text = ScalarInt(conn, "SELECT COUNT(*) FROM vehicle").ToString();
+                label6.Text = ScalarInt(conn, "SELECT COUNT(*) FROM vehicle WHERE Status = 'Available'").ToString();
+                label8.Text = ScalarInt(conn, "SELECT COUNT(*) FROM vehicle WHERE Status = 'Rented'").ToString();
                 label10.Text = ScalarInt(conn, "SELECT COUNT(*) FROM vehicle WHERE Status = 'Maintenance'").ToString();
 
                 const string recentSql = @"
@@ -194,6 +192,7 @@ namespace Vehical_Rental_Management_System
 
             if (result == DialogResult.Yes)
             {
+                UserSession.Clear();
                 DialogResult = DialogResult.Retry; // Signals Program.cs to show LoginForm again
                 Close();
             }
@@ -206,37 +205,21 @@ namespace Vehical_Rental_Management_System
         /// </summary>
         private void ApplyRolePermissions()
         {
-            switch (_loggedInRole)
-            {
-                case "Admin":
-                    // Admin sees everything — no restrictions
-                    break;
+            button2.Visible = AccessControl.CanOpen(AppModule.Vehicles);
+            button3.Visible = AccessControl.CanOpen(AppModule.Customers);
+            button4.Visible = AccessControl.CanOpen(AppModule.Booking);
+            button5.Visible = AccessControl.CanOpen(AppModule.Return);
+            button6.Visible = AccessControl.CanOpen(AppModule.Payments);
+            button7.Visible = AccessControl.CanOpen(AppModule.Reports);
+            button8.Visible = false; // Hide Users button - Admin role removed
 
-                case "Manager":
-                    // Manager cannot access the Users admin button
-                    button8.Visible = false;    // ⚙️ Users
-                    adminToolStripMenuItem.Visible = false;
-                    break;
+            reportsToolStripMenuItem.Visible = AccessControl.CanOpen(AppModule.Reports);
+            adminToolStripMenuItem.Visible = false; // Hide Admin menu item
+        }
 
-                case "Staff":
-                    // Staff can only do bookings and returns
-                    button7.Visible  = false;   // 📊 Reports
-                    button8.Visible  = false;   // ⚙️ Users
-                    button12.Visible = false;   // View Reports
-                    adminToolStripMenuItem.Visible   = false;
-                    reportsToolStripMenuItem.Visible = false;
-                    break;
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
-                case "Viewer":
-                    // Viewer is read-only — disable all action buttons
-                    button7.Visible  = false;
-                    button8.Visible  = false;
-                    button10.Visible = false;   // New Booking
-                    button11.Visible = false;   // Process Return
-                    button12.Visible = false;
-                    adminToolStripMenuItem.Visible   = false;
-                    break;
-            }
         }
     }
 }

@@ -111,7 +111,7 @@ namespace Vehical_Rental_Management_System
                 {
                     con.Open();
                     // Using your table 'vehicle' with exact column names wrapped in backticks
-                    string query = "INSERT INTO vehicle (`Brand`, `Model`, `Type`, `Reg. No`, `Daily Rate(LKR)`, `Manufacture Year`, `Status`) " +
+                    string query = "INSERT INTO vehicle (`Brand`, `Model`, `Type`, `RegNo`, `DailyRate`, `ManufactureYear`, `Status`) " +
                                    "VALUES (@Brand, @Model, @Type, @RegNumber, @DailyRate, @Year, @Status)";
                     using (MySqlCommand cmd = new MySqlCommand(query, con))
                     {
@@ -181,8 +181,8 @@ namespace Vehical_Rental_Management_System
                 using (MySqlConnection con = new MySqlConnection(connectionString))
                 {
                     con.Open();
-                    // Searches by Reg. No, Brand, or Model based on textBox1
-                    string query = "SELECT * FROM vehicle WHERE `Reg. No` LIKE @Search OR `Brand` LIKE @Search OR `Model` LIKE @Search";
+                    // Searches by RegNo, Brand, or Model based on textBox1
+                    string query = "SELECT * FROM vehicle WHERE `RegNo` LIKE @Search OR `Brand` LIKE @Search OR `Model` LIKE @Search";
                     MySqlDataAdapter da = new MySqlDataAdapter(query, con);
                     da.SelectCommand.Parameters.AddWithValue("@Search", "%" + textBox1.Text + "%");
 
