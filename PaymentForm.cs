@@ -93,6 +93,8 @@ namespace Vehical_Rental_Management_System
                 { if (e.KeyCode == Keys.Enter) BtnGo_Click(s, e); };
             dtpDate.ValueChanged += dateTimePicker1_ValueChanged;
 
+            FormClosing += FrmPayment_FormClosing;
+
 
             comboBox1.Items.AddRange(new object[]
                 { "Cash", "Credit Card", "Debit Card", "Bank Transfer", "Online" });
@@ -271,9 +273,10 @@ namespace Vehical_Rental_Management_System
 
             if (_fromReturnFlow)
             {
-                ShowSuccess("Payment processed successfully.");
-                DialogResult = DialogResult.OK;
-                Close();
+                ShowSuccess("Payment processed successfully. You can view the receipt and close this window when done.");
+                btnProcessPayment.Enabled = false;
+                btnPrint.Enabled = true;
+                SetPanelReadOnly(true);
                 return;
             }
 
@@ -284,6 +287,14 @@ namespace Vehical_Rental_Management_System
         private void BtnClear_Click(object? sender, EventArgs e)   { ClearPaymentPanel(); SetPanelReadOnly(true); }
         private void BtnRefresh_Click(object? sender, EventArgs e) { TryConnectDb(); LoadRecentPayments(); }
         private void BtnPrint_Click(object? sender, EventArgs e)   => DoPrint();
+
+        private void FrmPayment_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (_fromReturnFlow && PaymentCompleted)
+            {
+                DialogResult = DialogResult.OK;
+            }
+        }
 
 
         private void LoadRecentPayments(string filter = "")
