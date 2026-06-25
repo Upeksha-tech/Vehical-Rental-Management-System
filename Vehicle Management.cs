@@ -17,8 +17,9 @@ namespace Vehical_Rental_Management_System
         public Form3()
         {
             InitializeComponent();
-            
+
             this.Load += Form3_Load;
+            this.button1.Click += button1_Click;
             this.button6.Click += button6_Click;
             this.button3.Click += button3_Click;
             this.button4.Click += button4_Click;
@@ -69,6 +70,13 @@ namespace Vehical_Rental_Management_System
             }
         }
 
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            groupBox1.Enabled = true;
+            ClearFields();
+            textBox2.Focus();
+        }
 
         private void ClearFields()
         {
@@ -123,6 +131,7 @@ namespace Vehical_Rental_Management_System
 
                         LoadData();
                         ClearFields();
+                        groupBox1.Enabled = false;
                     }
                 }
             }
@@ -202,6 +211,7 @@ namespace Vehical_Rental_Management_System
         private void button7_Click(object sender, EventArgs e)
         {
             ClearFields();
+            groupBox1.Enabled = false;
         }
     }
 }
