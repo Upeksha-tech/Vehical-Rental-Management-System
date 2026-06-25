@@ -21,7 +21,18 @@ namespace Vehical_Rental_Management_System
             this.button3.Click += button3_Click;
             
             this.exportCSVToolStripMenuItem.Click += button2_Click;
-            this.generateReportsToolStripMenuItem.Click += button1_Click;
+            this.generateReportsToolStripMenuItem.Click += generateReportsToolStripMenuItem_Click;
+            this.printToolStripMenuItem.Click += printToolStripMenuItem_Click;
+        }
+
+        private void generateReportsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("A simple report opens successfully.", "Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Printing report...", "Print", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Form8_Load(object sender, EventArgs e)

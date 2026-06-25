@@ -34,6 +34,8 @@ namespace Vehical_Rental_Management_System
             
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             
+            groupBox1.Enabled = false;
+            
             LoadDropdowns();
             LoadData();
         }
