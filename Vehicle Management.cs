@@ -20,11 +20,13 @@ namespace Vehical_Rental_Management_System
             
             // Wire up events manually to avoid touching the .Designer.cs file
             this.Load += Form3_Load;
-            this.button6.Click += button6_Click; // Save
-            this.button3.Click += button3_Click; // Delete
-            this.button4.Click += button4_Click; // Search
-            this.button5.Click += button5_Click; // Reset
-            this.button7.Click += button7_Click; // Clear
+            this.button6.Click += button6_Click;
+            this.button3.Click += button3_Click;
+            this.button4.Click += button4_Click;
+            this.button5.Click += button5_Click;
+            this.button7.Click += button7_Click;
+            backToolStripMenuItem.Click += (s, e) => Close();
+            refreshToolStripMenuItem.Click += (s, e) => LoadData();
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -35,11 +37,13 @@ namespace Vehical_Rental_Management_System
             // Fit the table columns to the size of the DataGridView
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             
+            groupBox1.Enabled = false;
+            
             LoadDropdowns();
             LoadData();
         }
 
-        // --- Dropdown Lists ---
+
         private void LoadDropdowns()
         {
             // Populate Vehicle Type (comboBox1)
